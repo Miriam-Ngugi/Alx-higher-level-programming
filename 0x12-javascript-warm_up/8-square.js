@@ -1,6 +1,11 @@
 #!/usr/bin/node
-function factorial (n) {
-  return n === 0 || isNaN(n) ? 1 : n * factorial(n - 1);
+const size = Math.floor(Number(process.argv[2]));
+if (isNaN(size)) {
+  console.log('Missing size');
+} else {
+  for (let r = 0; r < size; r++) {
+    let row = '';
+    for (let c = 0; c < size; c++) row += 'X';
+    console.log(row);
+  }
 }
-
-console.log(factorial(Number(process.argv[2])));
