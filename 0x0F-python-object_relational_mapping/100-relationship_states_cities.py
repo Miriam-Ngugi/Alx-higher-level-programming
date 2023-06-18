@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-""" Script that lists all State objects, and corresponding
-    City objects, contained in the database hbtn_0e_101_usa """
+""" Script that creates the State “California” with the City
+    “San Francisco” from the database hbtn_0e_100_usa """
 
 if __name__ == "__main__":
 
     import sys
-    from relationship_city import Base, City
-    from relationship_state import State
-    from sqlalchemy.schema import Table
+    from relationship_state import State, Base
+    from relationship_city import City
     from sqlalchemy import create_engine
     from sqlalchemy.orm import Session
+    from sqlalchemy.schema import Table
 
     engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format
                            (sys.argv[1], sys.argv[2], sys.argv[3]),
@@ -17,8 +17,9 @@ if __name__ == "__main__":
     Base.metadata.create_all(engine)
 
     s = Session(engine)
-    for state in s.query(State).order_by(State.id).all():
-        print("{}: {}".format(state.id, state.name))
-        for city in state.cities:
-            print("    {}: {}".format(city.id, city.name))
+    news = State(name='California')
+    newc = City(name='San Francisco')
+    news.cities.append(newc)
+    s.add_all([news, newc])
+    s.commit()
     s.close()
