@@ -1,1 +1,1 @@
-My SQL introduction
+SQL introduction
